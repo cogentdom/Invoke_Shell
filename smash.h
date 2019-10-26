@@ -2,6 +2,6 @@
 #define __DH_SMASH_H__
 
 void loop();
-int execute_command(char * cmd);
+void executeCommand(char *cmd[]);
 
 #endif

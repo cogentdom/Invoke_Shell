@@ -4,30 +4,55 @@
 #include <getopt.h>
 #include "smash.h"
 
-read(void){
+#define MAXLINE 4096
+#define NUMBER_OF_ARGUMENTS 10
 
-}
+
 
 void loop(void) {
-    char * line;
-    char ** args;
-    int status;
 
-    do {
-        printf("Hello\n");
-        line = read();
+    char bfr[MAXLINE];
+    
+    char *arr[NUMBER_OF_ARGUMENTS];
+    char *line;
+    fputs("$ ", stderr);    //Output the first prompt
+    int index = 0;
+    while (fgets(bfr, MAXLINE, stdin) != NULL) {
+        // Marks the end of input stream with null character
+        if (bfr[strlen(bfr) - 1] == '\n') { //Replace newline character with null character
+            bfr[strlen(bfr) - 1] = '\0';
+        } else if (bfr[strlen(bfr) - 1] != '\0') {  //Append null character to input
+            bfr[strlen(bfr)] = '\0';
+        }   
 
-        args = parse(line);
-        status = execute_command(args);
+        line = strtok(bfr, " ");
+        while((line != NULL) && (*line != '\n')) {
+            if (*line == ' ') {  //Prevents an input with consecutive spaces
+                fprintf(stderr, "Error: invalid input");
+                break;
+            } else {
+                arr[index] = line;
+                line = strtok(NULL, " ");
+                index++;
+            }
 
-        free(line);
-        free(args);
-    } while (status);
+        }
+
+        
+        for (int i=0; i < index; i++) { // Checks arrg acuracy
+            printf("The line token: %s\n", arr[i]);
+        }
+        
+        executeCommand(arr);
+        fputs("$ ", stderr);
+    }
     
 }
 
 int main(void) {
 
     loop();
+    
+    
     return 0;
 }

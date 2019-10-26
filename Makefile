@@ -30,8 +30,8 @@ all: $(EXE) rules.d
  
 
 smash: smash.o commands.o
-	$(CC) $(CFLAGS) $? -o $@
-smash.o: smash.c smash.h
+	$(CC) $(CFLAGS) $^ -o $@
+smash.o: smash.c commands.c smash.h
 	$(CC) $(CFLAGS) -c $<
 commands.o: commands.c smash.h 
 	$(CC) $(CFLAGS) -c $<
