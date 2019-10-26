@@ -3,7 +3,6 @@
 #include <string.h>
 #include <getopt.h>
 #include "smash.h"
-#include "commands.h"
 
 read(void){
 
@@ -19,7 +18,7 @@ void loop(void) {
         line = read();
 
         args = parse(line);
-        status = execute(args);
+        status = execute_command(args);
 
         free(line);
         free(args);

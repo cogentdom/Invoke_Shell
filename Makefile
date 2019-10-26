@@ -15,7 +15,7 @@
 	OBJS = smash.o commands.o
 
 #-----Define names of all header files
-	HDRS = smash.h commands.h
+	HDRS = smash.h
 
 #-----Define the name of the resulting executable(s)
 	EXE = smash
@@ -33,7 +33,7 @@ smash: smash.o commands.o
 	$(CC) $(CFLAGS) $? -o $@
 smash.o: smash.c smash.h
 	$(CC) $(CFLAGS) -c $<
-commands.o: commands.c commands.h smash.h 
+commands.o: commands.c smash.h 
 	$(CC) $(CFLAGS) -c $<
 
 
