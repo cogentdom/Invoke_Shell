@@ -12,10 +12,10 @@
 # ---------------------------
 
 #-----Define names of all object files
-	OBJS = smash.o commands.o
+	OBJS = smash.o commands.o history.o
 
 #-----Define names of all header files
-	HDRS = smash.h
+	HDRS = smash.h history.h
 
 #-----Define the name of the resulting executable(s)
 	EXE = smash
@@ -28,15 +28,18 @@
 .PHONY: all
 all: $(EXE) rules.d
  
-
-smash: smash.o commands.o
+$(EXE): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@
-smash.o: smash.c commands.c smash.h
-	$(CC) $(CFLAGS) -c $<
-	$(CC) $(CFLAGS) -c commands.c
-commands.o: commands.c smash.h 
-	$(CC) $(CFLAGS) -c $<
 
+smash: smash.o commands.o history.o
+	$(CC) $(CFLAGS) $^ -o $@
+# smash.o: smash.c
+# 	$(CC) $(CFLAGS) -c $<
+
+# commands.o: commands.c
+# 	$(CC) $(CFLAGS) -c $<
+# history.o: history.c
+# 	$(CC) $(CFLAGS) -c $<
 
 rules.d: $(wildcard *.c) $(wildcard *.h)
 	$(CC) -MM $(wildcard *.c) >rules.d
