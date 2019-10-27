@@ -33,6 +33,7 @@ smash: smash.o commands.o
 	$(CC) $(CFLAGS) $^ -o $@
 smash.o: smash.c commands.c smash.h
 	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c commands.c
 commands.o: commands.c smash.h 
 	$(CC) $(CFLAGS) -c $<
 

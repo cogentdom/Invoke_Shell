@@ -12,8 +12,11 @@
 void loop(void) {
 
     char bfr[MAXLINE];
+    // char (*ptr);
+    // void *ptr;
     
-    char *arr[NUMBER_OF_ARGUMENTS];
+    Cmd *cmd_ptr = malloc(sizeof(Cmd));
+    
     char *line;
     fputs("$ ", stderr);    //Output the first prompt
     int index = 0;
@@ -31,7 +34,7 @@ void loop(void) {
                 fprintf(stderr, "Error: invalid input");
                 break;
             } else {
-                arr[index] = line;
+                cmd_ptr->arr[index] = line;
                 line = strtok(NULL, " ");
                 index++;
             }
@@ -40,10 +43,12 @@ void loop(void) {
 
         
         for (int i=0; i < index; i++) { // Checks arrg acuracy
-            printf("The line token: %s\n", arr[i]);
+            printf("The line token: %s\n", cmd_ptr->arr[i]);
         }
-        
-        executeCommand(arr);
+        // const char *ptr;
+        // cmd_ptr->arr = malloc((sizeof(&arr)));
+        printf("The malloc pointer is: %s\n", cmd_ptr->arr[0]);
+        executeCommand(cmd_ptr);
         fputs("$ ", stderr);
     }
     
