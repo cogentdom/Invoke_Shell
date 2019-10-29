@@ -2,26 +2,34 @@
 #include <stdlib.h>
 #include <string.h>
 #include "history.h"
+#include "smash.h"
 
-Cmd init_hist() {
-    Cmd *hist_ptr = malloc(sizeof(Cmd));
-    // hist_ptr->stack[0] = NULL;
-    // hist_ptr->count = 0;
-    return *hist_ptr;
+void add_history(char *cmd, int exitStatus) {
+   
+
 }
 
-char* add_history(Cmd *cmd_ptr) {
-    // ptr->stack[ptr->count] = cp;
-    // ptr->count++;
-    // int i = &cmd_ptr->index;
-    // sh_ptr->arr[cmd_ptr->index];
-    // int *out = &cmd_ptr->exit_status;
-    char *command = cmd_ptr->cmd;
-    // int *out = i;
-     printf ("%s \n", command);
-     char *formatted = "TEXT";
-    return formatted;
-}
-void history(Cmd *ptr) {
-    
+
+void print_history (Shell *sh_ptr) {
+    int tmp_ptr = sh_ptr->stack_ptr;
+    printf("*************Temp pointer val = %d\n", tmp_ptr);
+    if (sh_ptr->count == COMMAND_RECALL) {  // Condition for a full history stack
+        if (tmp_ptr == sh_ptr->count -1) {
+            tmp_ptr = 0;
+        } else {
+            tmp_ptr++;
+        }
+    } else {
+        tmp_ptr = 0;
+    }
+    for (int i=0; i <(sh_ptr->count); i++) {
+        if (tmp_ptr == sh_ptr->count -1) {
+            printf("%s\n", sh_ptr->stack[tmp_ptr]);
+            tmp_ptr = 0;
+        } else {
+            printf("%s\n", sh_ptr->stack[tmp_ptr]);
+            tmp_ptr++;
+        }
+        
+    }
 }

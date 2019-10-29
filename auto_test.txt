@@ -1,0 +1,16 @@
+cd ./tester.txt
+exit
+echo $PATH
+exit
+cd ..
+cd ./tester.txt
+exit
+echo $PATH
+exit
+cd ..
+cd ./tester.txt
+exit
+echo $PATH
+exit
+cd ..
+history

@@ -5,22 +5,56 @@
 #include "smash.h"
 #include "history.h"
 
-void init_commands(Shell *sh_ptr) {
-    // Cmd history_log = init_hist();
+#define STACK_INDEX_POS 0
+
+void init_shell(Shell *sh_ptr) {
     sh_ptr->arr[0] = NULL;
-    sh_ptr->command = NULL;
     sh_ptr->stack[0] = NULL;
-    // int exit_status;
-    // int count = 0;
-    // sh_ptr->Log = malloc(sizeof(Hist));
-    // history_log;
 }
 
-int chg_dir(char *p) {
+void chg_dir(char *p);
+
+void exit_shell(void);
+
+void executeCommand(Shell *sh_ptr) {
+    Cmd *cmd_ptr = malloc(sizeof(Cmd));
+    if (sh_ptr->stack_ptr == 9) {
+        sh_ptr->stack_ptr = 0;
+    } else {
+        // sh_ptr->stack_ptr++;
+    }
+    
+    int val = sh_ptr->stack_ptr;
+    printf("Val = %d\n", val);
+    printf("Added command:  $ %s\n", sh_ptr->stack[sh_ptr->stack_ptr]);
+    // cmd_ptr->cmd = command;
+    
+    cmd_ptr->exit_status = 0;
+    
+    
+   
+    if (!strcmp(sh_ptr->arr[0], "cd")) {
+        if (sh_ptr->count > 2) {
+            // sh_ptr->arr[1] = add_history(cmd_ptr);
+            fprintf(stderr, "Invalid syntax for cd\n");
+        } else {
+            // chg_dir(sh_ptr->arr[1]);
+        }
+       
+    } else if(!strcmp(sh_ptr->arr[0], "history")) {
+        
+        print_history(sh_ptr);
+    } else if(!strcmp(sh_ptr->arr[0], "exit")) {
+        exit_shell();
+    }
+    
+}
+
+void chg_dir(char *p) {
     FILE *file = fopen(p, "a+");
     if (file == NULL) {
         fprintf(stderr, "%s: No such file or directory", p);
-        return 1;
+        // return 1;
     } else {
         printf("%s\n", p);
     }
@@ -29,34 +63,3 @@ int chg_dir(char *p) {
 void exit_shell(void) {
 
 }
-
-void executeCommand(Shell *sh_ptr) {
-    Cmd *cmd_ptr = malloc(sizeof(Cmd));
-    cmd_ptr->index = &Index;
-    // Index++;
-    cmd_ptr->cmd = strcat(sh_ptr->arr[0], sh_ptr->arr[1]);
-    int ext=0;
-    cmd_ptr->exit_status = &ext;
-    
-    // extern char **arr;
-    // char *arr[NUMBER_OF_ARGUMENTS];
-    // arr[0] = p[0];
-    
-   
-    if (!strcmp(sh_ptr->arr[0], "cd")) {
-        if ((int)sizeof(sh_ptr->arr) > 2) {
-            sh_ptr->arr[1] = add_history(cmd_ptr);
-            fprintf(stderr, "Invalid syntax for cd");
-        } else {
-            chg_dir(sh_ptr->arr[1]);
-        }
-       
-    } else if(!strcmp(sh_ptr->arr[0], "history")) {
-        
-        // history();
-    } else if(!strcmp(sh_ptr->arr[0], "exit")) {
-        exit_shell();
-    }
-    
-}
-
