@@ -6,10 +6,7 @@
 #include "history.h"
 
 
-void to_stack (Shell *sh_ptr, char *command, int index);
-
-
-void loop(Shell *sh_ptr) {
+int loop(Shell *sh_ptr) {
 
     char bfr[MAXLINE];
     char *toke;
@@ -55,16 +52,18 @@ void loop(Shell *sh_ptr) {
                 index++;
             }
         }
-
+        
         if (index != 0) {   // Resets 'loop()' when user inputs '\n'
-            to_stack(sh_ptr, command, index);
+            add_history(sh_ptr, command, index);
             executeCommand(sh_ptr);
-            
+            if (Exit) {
+                return 0;
+            }
         }
         sh_ptr->arr[0] = NULL;
-        fputs("$ ", stderr);
+        fputs("[smashshell]$ ", stderr);
     }
-    
+    return 0;    
 }
 
 int main(void) {
@@ -73,27 +72,7 @@ int main(void) {
     init_shell(sh_ptr);
     
     loop(sh_ptr);
-    // free(sh_ptr);
+    free(sh_ptr);
     
     return 0;
-}
-
-void to_stack (Shell *sh_ptr, char *command, int index) {
-    if (sh_ptr->stack_ptr == COMMAND_RECALL - 1) {
-        sh_ptr->stack_ptr = 0;
-        sh_ptr->stack[sh_ptr->stack_ptr] = command;
-        sh_ptr->arr[index] = '\0';
-    } else if (sh_ptr->stack[sh_ptr->stack_ptr] == NULL) {
-        sh_ptr->stack[sh_ptr->stack_ptr] = command;
-        sh_ptr->count = 0;
-        sh_ptr->arr[index] = '\0';
-        sh_ptr->stack_ptr = 0;    
-    }else {
-        sh_ptr->stack_ptr++;
-        sh_ptr->stack[sh_ptr->stack_ptr] = command;
-        sh_ptr->arr[index] = '\0';
-        if (sh_ptr->count < 10) {
-            sh_ptr->count++;
-        }
-    }
 }

@@ -5,41 +5,23 @@
 #include "smash.h"
 #include "history.h"
 
-#define STACK_INDEX_POS 0
-
 void init_shell(Shell *sh_ptr) {
     sh_ptr->arr[0] = NULL;
     sh_ptr->stack[0] = NULL;
+    Exit = 0;
 }
 
 void chg_dir(char *p);
 
-void exit_shell(void);
+void exit_shell(void) {
+    Exit = 1;
+}
 
 void executeCommand(Shell *sh_ptr) {
-    Cmd *cmd_ptr = malloc(sizeof(Cmd));
-    if (sh_ptr->stack_ptr == 9) {
-        sh_ptr->stack_ptr = 0;
-    } else {
-        // sh_ptr->stack_ptr++;
-    }
-    
-    int val = sh_ptr->stack_ptr;
-    printf("Val = %d\n", val);
-    printf("Added command:  $ %s\n", sh_ptr->stack[sh_ptr->stack_ptr]);
-    // cmd_ptr->cmd = command;
-    
-    cmd_ptr->exit_status = 0;
-    
     
    
     if (!strcmp(sh_ptr->arr[0], "cd")) {
-        if (sh_ptr->count > 2) {
-            // sh_ptr->arr[1] = add_history(cmd_ptr);
-            fprintf(stderr, "Invalid syntax for cd\n");
-        } else {
-            // chg_dir(sh_ptr->arr[1]);
-        }
+        
        
     } else if(!strcmp(sh_ptr->arr[0], "history")) {
         
@@ -58,8 +40,4 @@ void chg_dir(char *p) {
     } else {
         printf("%s\n", p);
     }
-}
-
-void exit_shell(void) {
-
 }

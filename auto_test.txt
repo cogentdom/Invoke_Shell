@@ -1,16 +1,13 @@
-cd ./tester.txt
-exit
-echo $PATH
-exit
-cd ..
-cd ./tester.txt
-exit
-echo $PATH
-exit
-cd ..
-cd ./tester.txt
-exit
-echo $PATH
-exit
-cd ..
-history
+start 0
+cd 1
+exit 2
+echo 3
+exit 4
+ls 5
+cd 6
+echo 7
+cd 8
+fs 9
+cd 10
+exit 11
+history 16

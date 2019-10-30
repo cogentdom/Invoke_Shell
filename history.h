@@ -9,7 +9,7 @@ typedef struct {
 
 void init_history(void);
 
-void add_history(char *cmd, int exitStatus);
+void add_history(Shell *sh_ptr, char *command, int index);
 
 void clear_history(void);
 
