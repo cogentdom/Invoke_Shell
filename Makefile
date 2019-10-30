@@ -31,7 +31,7 @@ all: $(EXE) rules.d
 $(EXE): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@
 
-# smash: smash.o commands.o history.o
+smash: $(EXE)
 # 	$(CC) $(CFLAGS) $^ -o $@
 # smash.o: smash.c
 # 	$(CC) $(CFLAGS) -c $<

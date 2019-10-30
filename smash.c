@@ -8,7 +8,7 @@
 
 int loop(Shell *sh_ptr) {
 
-    char bfr[MAXLINE];
+    
     char *toke;
     fputs("$ ", stderr);    //Output the first prompt
     
@@ -52,8 +52,11 @@ int loop(Shell *sh_ptr) {
                 index++;
             }
         }
-        
+        if ((toke != NULL) && (*toke == '\n')) {
+            fputs("\n", stderr);
+        }
         if (index != 0) {   // Resets 'loop()' when user inputs '\n'
+            sh_ptr->arr_size = index;
             add_history(sh_ptr, command, index);
             executeCommand(sh_ptr);
             if (Exit) {
@@ -61,6 +64,7 @@ int loop(Shell *sh_ptr) {
             }
         }
         sh_ptr->arr[0] = NULL;
+        
         fputs("[smashshell]$ ", stderr);
     }
     return 0;    

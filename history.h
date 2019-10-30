@@ -7,11 +7,11 @@ typedef struct {
     int exit_status;
 }Cmd;
 
-void init_history(void);
+void init_history(Shell *sh_ptr);
 
 void add_history(Shell *sh_ptr, char *command, int index);
 
-void clear_history(void);
+void clear_history(Shell *sh_ptr);
 
 void print_history(Shell *sh_ptr);
 

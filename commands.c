@@ -5,11 +5,17 @@
 #include "smash.h"
 #include "history.h"
 
+
 void init_shell(Shell *sh_ptr) {
-    sh_ptr->arr[0] = NULL;
-    sh_ptr->stack[0] = NULL;
-    Exit = 0;
+    init_history(sh_ptr);
+    sh_ptr->env = getenv(ENVIORMENT);
+    if (sh_ptr->env != NULL) {
+        printf("path: %s\n", sh_ptr->env);
+        // putenv(sh_ptr->env);
+    }
 }
+
+
 
 void chg_dir(char *p);
 
@@ -21,6 +27,16 @@ void executeCommand(Shell *sh_ptr) {
     
    
     if (!strcmp(sh_ptr->arr[0], "cd")) {
+
+        if (sh_ptr->arr_size == 2) {
+            int complete = chdir(sh_ptr->arr[1]);
+            if (complete == 0) {
+                char* cur_dir = getcwd(NULL, MAXLINE);
+                printf("%s\n", cur_dir);
+            } else {
+                fprintf(stderr, "no such directory\n");
+            }
+        }
         
        
     } else if(!strcmp(sh_ptr->arr[0], "history")) {
@@ -29,7 +45,7 @@ void executeCommand(Shell *sh_ptr) {
     } else if(!strcmp(sh_ptr->arr[0], "exit")) {
         exit_shell();
     }
-    
+    sh_ptr->exit_stack[sh_ptr->stack_ptr] = &sh_ptr->exit_status;
 }
 
 void chg_dir(char *p) {
