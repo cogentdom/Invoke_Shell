@@ -2,25 +2,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include "history.h"
-#include "smash.h"
+// #include "smash.h"
 
 void add_history(Shell *sh_ptr, char *command, int index) {
     if (sh_ptr->stack_ptr == HISTORY_SIZE - 1) {
         sh_ptr->stack_ptr = 0;
         sh_ptr->stack[sh_ptr->stack_ptr] = command;
         sh_ptr->arr[index] = NULL;
-        // memset(sh_ptr->arr, 0, sizeof(sh_ptr->arr));
     } else if (sh_ptr->stack[sh_ptr->stack_ptr] == NULL) {
         sh_ptr->stack[sh_ptr->stack_ptr] = command;
         sh_ptr->count = 1;
         sh_ptr->arr[index] = NULL;
-        // memset(sh_ptr->arr, 0, sizeof(sh_ptr->arr));
         sh_ptr->stack_ptr = 0;    
     }else {
         sh_ptr->stack_ptr++;
         sh_ptr->stack[sh_ptr->stack_ptr] = command;
         sh_ptr->arr[index] = NULL;
-        // memset(sh_ptr->arr, 0, sizeof(sh_ptr->arr));
         if (sh_ptr->count < HISTORY_SIZE) {
             sh_ptr->count++;
         }

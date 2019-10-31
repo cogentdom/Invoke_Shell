@@ -6,6 +6,7 @@
 #define ENVIORMENT "PATH"
 
 
+
 typedef struct{
     char *arr[NUMBER_OF_ARGUMENTS];
     char *stack[HISTORY_SIZE];

@@ -8,11 +8,8 @@
 
 int loop(Shell *sh_ptr) {
 
-    
-    char *toke;
-    fputs("$ ", stderr);    //Output the first prompt
-    
-
+    fputs("[smashshell]$ ", stderr);    //Output the first prompt
+    char *command;
     /////////////////////////////////////////////
     //
     // Loops while shell is open
@@ -32,7 +29,8 @@ int loop(Shell *sh_ptr) {
         // Loops through individual commands
         //
         /////////////////////////////////////////////
-        char *command = malloc(MAXLINE);
+        char *toke;
+        command = malloc(MAXLINE);
         int index = 0;
         toke = strtok(bfr, " ");    //Takes command and uses a speace as delimeter
         while((toke != NULL) && (*toke != '\n')) {
@@ -57,7 +55,6 @@ int loop(Shell *sh_ptr) {
         }
         if (index != 0) {   // Resets 'loop()' when user inputs '\n'
             sh_ptr->arr_size = index;
-            // printf("before hist: %d", sh_ptr->stack_ptr);
             add_history(sh_ptr, command, index);
             executeCommand(sh_ptr);
             if (Exit) {
@@ -69,7 +66,7 @@ int loop(Shell *sh_ptr) {
         
         fputs("[smashshell]$ ", stderr);
     }
-    // free(command);
+    free(command);
     return 0;    
 }
 

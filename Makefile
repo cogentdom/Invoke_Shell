@@ -1,13 +1,14 @@
 #----------------------------
 #
-# Makefile --- File for program 1 cs253
+# Makefile --- File for program 4 cs253
 #
 # Usage
 # 	make all	Build the released product
+# 	make smash	Constructs the executable for the smash shell
 # 	make clean	Remove build artifacts
 #
 # Author(s)
-# 09/12/2019 Dominik Huffield
+# 09/25/2019 Dominik Huffield
 #
 # ---------------------------
 
@@ -28,18 +29,11 @@
 .PHONY: all
 all: $(EXE) rules.d
  
-$(EXE): $(OBJS)
+$(EXE): $(OBJS) $(HDRS)
 	$(CC) $(CFLAGS) $^ -o $@
 
-smash: $(EXE)
-# 	$(CC) $(CFLAGS) $^ -o $@
-# smash.o: smash.c
-# 	$(CC) $(CFLAGS) -c $<
+smash: $(OBJS) $(HDRS)
 
-# commands.o: commands.c
-# 	$(CC) $(CFLAGS) -c $<
-# history.o: history.c
-# 	$(CC) $(CFLAGS) -c $<
 
 rules.d: $(wildcard *.c) $(wildcard *.h)
 	$(CC) -MM $(wildcard *.c) >rules.d

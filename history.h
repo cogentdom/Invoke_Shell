@@ -1,5 +1,6 @@
 #ifndef __DH_HISTORY_H__
 #define __DH_HISTORY_H__
+
 #include "smash.h"
 
 typedef struct {

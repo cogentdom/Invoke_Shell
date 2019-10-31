@@ -1,3 +1,6 @@
-./smash
 ls
+cd ..
+cp
+cd afile
+history
 exit
