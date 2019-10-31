@@ -31,7 +31,9 @@ void add_history(Shell *sh_ptr, char *command, int index) {
 void init_history(Shell *sh_ptr) {
     sh_ptr->arr[0] = NULL;
     sh_ptr->stack[0] = NULL;
+    sh_ptr->exit_stack[0] = -1;
     Exit = 0;
+    sh_ptr->stack_ptr = 0;
 }
 
 void clear_history(Shell *sh_ptr) {
@@ -39,30 +41,21 @@ void clear_history(Shell *sh_ptr) {
     init_history(sh_ptr);
     sh_ptr->stack_ptr = 0;
     sh_ptr->count = 0;
-    sh_ptr->exit_status = 0; 
+    sh_ptr->exit_stack[sh_ptr->stack_ptr] = EXIT_SUCCESS; 
 }
 
 void print_history (Shell *sh_ptr) {
     int tmp_ptr = sh_ptr->stack_ptr;
-    // printf("*************Temp pointer val = %d\n", tmp_ptr);
-    // for (int i=0; i<(sh_ptr->count-1); i++) {
-    //     printf("%s\n", sh_ptr->stack[i]);
-    // }
-
-    // printf("^^^^^^^^^^Temp pointer val = %d\n", tmp_ptr);
-
-    printf("\n*** history ***\n");
-
+    printf("\n");
     if (tmp_ptr == sh_ptr->count -1 || sh_ptr->count < HISTORY_SIZE) {
         for (int i=0; i <(sh_ptr->count -1); i++) {
-            printf("%d [%d] %s\n", i+1, 0, sh_ptr->stack[i]);
-            // printf("%s\n", sh_ptr->stack[i]);
+            printf("%d [%d] %s\n", i+1, sh_ptr->exit_stack[i], sh_ptr->stack[i]);
         }
     } else {
         tmp_ptr++;
         for (int i=0; i <(sh_ptr->count -1); i++) {
-            printf("%d [%d] %s\n", i+1, 0, sh_ptr->stack[tmp_ptr]);
-            // printf("%s\n", sh_ptr->stack[tmp_ptr]);
+            printf("%d [%d] %s\n", i+1, sh_ptr->exit_stack[tmp_ptr], sh_ptr->stack[tmp_ptr]);
+            printf("%s\n", sh_ptr->stack[tmp_ptr]);
             if (tmp_ptr == sh_ptr->count -1) {
                 tmp_ptr = 0;
             } else {
@@ -70,6 +63,5 @@ void print_history (Shell *sh_ptr) {
             }
         }
     }
-
-     clear_history(sh_ptr);   
+    printf("\n");
 }

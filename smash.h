@@ -5,10 +5,11 @@
 #define MAXLINE 4096
 #define ENVIORMENT "PATH"
 
+
 typedef struct{
     char *arr[NUMBER_OF_ARGUMENTS];
     char *stack[HISTORY_SIZE];
-    int *exit_stack[HISTORY_SIZE];
+    int exit_stack[HISTORY_SIZE];
     const char *env;
     int stack_ptr;
     int arr_size;

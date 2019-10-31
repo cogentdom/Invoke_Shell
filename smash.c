@@ -57,16 +57,19 @@ int loop(Shell *sh_ptr) {
         }
         if (index != 0) {   // Resets 'loop()' when user inputs '\n'
             sh_ptr->arr_size = index;
+            // printf("before hist: %d", sh_ptr->stack_ptr);
             add_history(sh_ptr, command, index);
             executeCommand(sh_ptr);
             if (Exit) {
                 return 0;
             }
         }
+        
         sh_ptr->arr[0] = NULL;
         
         fputs("[smashshell]$ ", stderr);
     }
+    // free(command);
     return 0;    
 }
 
